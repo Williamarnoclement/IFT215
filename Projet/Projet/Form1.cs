@@ -60,16 +60,25 @@ namespace Projet
                 Location = new Point(13, 48),
                 AutoSize = true
             });
-            bookPanel.Controls.Add(new Button
-            {
-                Text = "Réserver",
-                Font = new Font("Segoe UI", 18, FontStyle.Regular),
-                BackColor = Color.White,
-                ForeColor = Color.Black,
-                Location = new Point(262, 70),
-                Size = new Size(199, 43)
-            });
+
+            Button current_button = new Button();
+            current_button.Text = "Réserver";
+            current_button.Font = new Font("Segoe UI", 18, FontStyle.Regular);
+            current_button.BackColor = Color.White;
+            current_button.ForeColor = Color.Black;
+            current_button.Location = new Point(262, 70);
+            current_button.Size = new Size(199, 43);
+            current_button.Click += (sender, e) => OpenForm2WithBook(book);
+
+            bookController.setButton(current_button);
+            bookPanel.Controls.Add(current_button);
             return bookPanel;
+        }
+
+        private void OpenForm2WithBook(Book book)
+        {
+            Form2 f2 = new Form2(book);
+            f2.Show();
         }
     }
 }

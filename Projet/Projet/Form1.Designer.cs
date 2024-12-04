@@ -189,6 +189,7 @@
             button2.TabIndex = 3;
             button2.Text = "Réserver";
             button2.UseVisualStyleBackColor = false;
+            
             // 
             // bookAuthorLabel
             // 
