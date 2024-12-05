@@ -52,6 +52,7 @@
             manageBookBorrowingsButton.TabIndex = 2;
             manageBookBorrowingsButton.Text = "← Retour a la recherche";
             manageBookBorrowingsButton.UseVisualStyleBackColor = false;
+            manageBookBorrowingsButton.Click += manageBookBorrowingsButton_Click;
             // 
             // topToolbar
             // 
@@ -138,12 +139,11 @@
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(800, 450);
             Controls.Add(booksFlowLayoutPanel);
             Controls.Add(searchBookTextBox);
             Controls.Add(topToolbar);
             Name = "Form3";
-            Text = "Form3";
+            Size = new System.Drawing.Size(800, 450);
             topToolbar.ResumeLayout(false);
             booksFlowLayoutPanel.ResumeLayout(false);
             bookPanel.ResumeLayout(false);

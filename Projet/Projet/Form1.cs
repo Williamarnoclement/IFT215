@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace Projet
 {
-    public partial class Form1 : Form
+    public partial class Form1 : UserControl
     {
         private BookController bookController;
         public Form1()
@@ -137,19 +137,15 @@ namespace Projet
         }
         private void OpenForm2WithBook(Book book)
         {
-            Form2 f2 = new Form2(book);
-            f2.Show();
+            if (MetaForm.form2 is Form2 form2)
+            {
+                form2.SetBook(book);
+                MetaForm.SwitchPanel(MetaForm.form2);
+            }
         }
-
-        private void OpenForm3()
-        {
-            Form3 f3 = new Form3();
-            f3.Show();
-        }
-
         private void manageBookBorrowingsButton_Click(object sender, EventArgs e)
         {
-            OpenForm3();
+            MetaForm.SwitchPanel(MetaForm.form3);
         }
     }
 }

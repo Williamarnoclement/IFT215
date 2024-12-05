@@ -10,19 +10,25 @@ using System.Windows.Forms;
 
 namespace Projet
 {
-    public partial class Form2 : Form
+    public partial class Form2 : UserControl
     {
-        Book selected_book;
-        public Form2(Book book)
+        Book? selected_book;
+        public Form2()
         {
             InitializeComponent();
+        }
+        public void SetBook(Book book)
+        {
             selected_book = book;
-            label1.Text = selected_book.Title;
+            if (book != null)
+            {
+                label1.Text = selected_book.Title;
+            }
         }
 
         private void manageBookBorrowingsButton_Click(object sender, EventArgs e)
         {
-
+            MetaForm.SwitchPanel(MetaForm.form1);
         }
 
         private void label1_Click(object sender, EventArgs e)
