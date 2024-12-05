@@ -23,7 +23,6 @@ namespace Projet
             loanController = new LoanController(loanRepository);
             loanController.AddLoan(new Loan(new Book("le roi lion", "Jeff", AgeGroup.Adulte, Category.Mathematique), new User("JeanGuy")));
             RefreshLoanList();
-            KeyPreview = true;
             KeyDown += new KeyEventHandler(HandleKeyDown);
             searchTextBox.Enter += new EventHandler(HandleOnEnter);
         }
