@@ -23,15 +23,23 @@ namespace Projet
             StateComboBox.Items.Add("Bon");
             StateComboBox.Items.Add("Abimé");
             StateComboBox.Items.Add("Détruit");
+
+            StartPosition = FormStartPosition.CenterParent;
+            Size = new Size(300, 150);
+            Text = "Retour de livre";
         }
 
-        private void Confirm()
+        private void BouttonConfirmer_Click(object sender, EventArgs e)
         {
-
+            ReturnState = StateComboBox.SelectedItem.ToString(); 
+            DialogResult = DialogResult.OK; 
+            Close();
         }
-        private void Cancel()
-        {
 
+        private void BoutonAnnuler_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.Cancel;
+            Close();
         }
     }
 }

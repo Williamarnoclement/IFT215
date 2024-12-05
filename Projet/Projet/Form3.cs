@@ -14,6 +14,8 @@ namespace Projet
     public partial class Form3 : Form
     {
         private LoanController loanController;
+        private BookController bookController;
+
         public Form3()
         {
             InitializeComponent();
@@ -89,14 +91,12 @@ namespace Projet
             {
                 if (form4.ShowDialog() == DialogResult.OK)
                 {
-                    // Récupérez l'état saisi par l'utilisateur.
+                    //TODO Gérer le returnState
                     string returnState = form4.ReturnState;
 
-                    // Effectuez les opérations nécessaires, comme enregistrer le retour.
                     MessageBox.Show($"Livre retourné avec l'état : {returnState}",
                         "Confirmation", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    // Rafraîchir la liste des prêts ou d'autres actions si nécessaire.
                     RefreshLoanList();
                 }
             }
