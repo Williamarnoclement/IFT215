@@ -19,7 +19,7 @@ namespace Projet
             InitializeComponent();
             var loanRepository = new LoanRepository();
             loanController = new LoanController(loanRepository);
-            loanController.AddLoan(new Loan(new Book("le roi lion", "Jeff"), new User("JeanGuy")));
+            loanController.AddLoan(new Loan(new Book("le roi lion", "Jeff", AgeGroup.Adulte, Category.Mathematique), new User("JeanGuy")));
             RefreshLoanList();
         }
 
