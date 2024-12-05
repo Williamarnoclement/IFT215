@@ -71,6 +71,7 @@
             manageBookBorrowingsButton.TabIndex = 2;
             manageBookBorrowingsButton.Text = "Gérer les emprunts";
             manageBookBorrowingsButton.UseVisualStyleBackColor = false;
+            manageBookBorrowingsButton.Click += manageBookBorrowingsButton_Click;
             // 
             // leftToolbarPanel
             // 
@@ -189,7 +190,6 @@
             button2.TabIndex = 3;
             button2.Text = "Réserver";
             button2.UseVisualStyleBackColor = false;
-            
             // 
             // bookAuthorLabel
             // 
