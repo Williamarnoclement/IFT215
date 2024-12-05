@@ -140,5 +140,16 @@ namespace Projet
             Form2 f2 = new Form2(book);
             f2.Show();
         }
+
+        private void OpenForm3()
+        {
+            Form3 f3 = new Form3();
+            f3.Show();
+        }
+
+        private void manageBookBorrowingsButton_Click(object sender, EventArgs e)
+        {
+            OpenForm3();
+        }
     }
 }

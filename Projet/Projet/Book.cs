@@ -12,6 +12,7 @@ namespace Projet
         public string Author { get; set; }
         public AgeGroup AgeGroup { get; set; }
         public Category Category { get; set; }
+        public string State { get; set; }
         public Book(string title, string author, AgeGroup ageGroup, Category category)
         {
             Title = title;

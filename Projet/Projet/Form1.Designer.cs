@@ -71,6 +71,7 @@
             manageBookBorrowingsButton.TabIndex = 2;
             manageBookBorrowingsButton.Text = "Gérer les emprunts";
             manageBookBorrowingsButton.UseVisualStyleBackColor = false;
+            manageBookBorrowingsButton.Click += manageBookBorrowingsButton_Click;
             // 
             // leftToolbarPanel
             // 
