@@ -10,10 +10,14 @@ namespace Projet
     {
         public string Title { get; set; }
         public string Author { get; set; }
-        public Book(string title, string author)
+        public AgeGroup AgeGroup { get; set; }
+        public Category Category { get; set; }
+        public Book(string title, string author, AgeGroup ageGroup, Category category)
         {
             Title = title;
             Author = author;
+            AgeGroup = ageGroup;
+            Category = category;
         }
     }
 }

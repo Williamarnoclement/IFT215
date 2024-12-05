@@ -147,16 +147,16 @@
             // 
             // searchBookTextBox
             // 
-            searchBookTextBox.BackColor = System.Drawing.SystemColors.WindowFrame;
+            searchBookTextBox.BackColor = System.Drawing.Color.White;
             searchBookTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            searchBookTextBox.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            searchBookTextBox.ForeColor = System.Drawing.Color.White;
+            searchBookTextBox.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            searchBookTextBox.ForeColor = System.Drawing.Color.Black;
             searchBookTextBox.Location = new System.Drawing.Point(12, 13);
             searchBookTextBox.Multiline = true;
             searchBookTextBox.Name = "searchBookTextBox";
+            searchBookTextBox.PlaceholderText = "Rechercher un livre...";
             searchBookTextBox.Size = new System.Drawing.Size(211, 37);
             searchBookTextBox.TabIndex = 0;
-            searchBookTextBox.Text = "Recherche";
             // 
             // booksFlowLayoutPanel
             // 
@@ -189,7 +189,6 @@
             button2.TabIndex = 3;
             button2.Text = "Réserver";
             button2.UseVisualStyleBackColor = false;
-            
             // 
             // bookAuthorLabel
             // 
