@@ -28,36 +28,47 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form4));
             label1 = new System.Windows.Forms.Label();
             StateComboBox = new System.Windows.Forms.ComboBox();
+            BouttonConfirmer = new System.Windows.Forms.Button();
+            BoutonAnnuler = new System.Windows.Forms.Button();
             SuspendLayout();
             // 
             // label1
             // 
-            label1.AutoSize = true;
-            label1.Location = new System.Drawing.Point(186, 162);
+            resources.ApplyResources(label1, "label1");
             label1.Name = "label1";
-            label1.Size = new System.Drawing.Size(170, 15);
-            label1.TabIndex = 0;
-            label1.Text = "Veuillez Indiquer l'état du livre :";
             // 
             // StateComboBox
             // 
+            resources.ApplyResources(StateComboBox, "StateComboBox");
             StateComboBox.FormattingEnabled = true;
-            StateComboBox.Location = new System.Drawing.Point(362, 159);
             StateComboBox.Name = "StateComboBox";
-            StateComboBox.Size = new System.Drawing.Size(121, 23);
-            StateComboBox.TabIndex = 1;
+            // 
+            // BouttonConfirmer
+            // 
+            resources.ApplyResources(BouttonConfirmer, "BouttonConfirmer");
+            BouttonConfirmer.Name = "BouttonConfirmer";
+            BouttonConfirmer.UseVisualStyleBackColor = true;
+            BouttonConfirmer.Click += BouttonConfirmer_Click;
+            // 
+            // BoutonAnnuler
+            // 
+            resources.ApplyResources(BoutonAnnuler, "BoutonAnnuler");
+            BoutonAnnuler.Name = "BoutonAnnuler";
+            BoutonAnnuler.UseVisualStyleBackColor = true;
+            BoutonAnnuler.Click += BoutonAnnuler_Click;
             // 
             // Form4
             // 
-            AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            resources.ApplyResources(this, "$this");
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(800, 450);
+            Controls.Add(BoutonAnnuler);
+            Controls.Add(BouttonConfirmer);
             Controls.Add(StateComboBox);
             Controls.Add(label1);
             Name = "Form4";
-            Text = "Form4";
             ResumeLayout(false);
             PerformLayout();
         }
@@ -66,5 +77,7 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox StateComboBox;
+        private System.Windows.Forms.Button BouttonConfirmer;
+        private System.Windows.Forms.Button BoutonAnnuler;
     }
 }
