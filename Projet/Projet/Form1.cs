@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -16,15 +17,20 @@ namespace Projet
         public Form1()
         {
             InitializeComponent();
+            searchBookTextBox.TextChanged += SearchTextBoxTextChanged;
+            ageComboBox.SelectedIndexChanged += ComboBoxSelectionChanged;
+            typeComboBox.SelectedIndexChanged += ComboBoxSelectionChanged;
             var bookRepository = new BookRepository();
             bookController = new BookController(bookRepository);
             bookRepository.BooksChanged += RefreshBookList;
-            bookController.AddBook(new Book("Titre du livre 1", "Auteur 1"));
-            bookController.AddBook(new Book("Titre du livre 2", "Auteur 2"));
-            bookController.AddBook(new Book("Titre du livre 3", "Auteur 3"));
+            bookController.AddBook(new Book("Titre du livre 1", "Auteur 1", AgeGroup.Enfant, Category.Policier));
+            bookController.AddBook(new Book("Titre du livre 2", "Auteur 2", AgeGroup.Adolescent, Category.Science));
+            bookController.AddBook(new Book("Titre du livre 3", "Auteur 3", AgeGroup.Adulte, Category.Aventure));
             RefreshBookList();
-            ageComboBox.Items.AddRange(new string[] { "Enfant", "Adolescent", "Adulte" });
-            typeComboBox.Items.AddRange(new string[] { "Policier", "Aventure", "Action", "Science", "Science-Fiction", "Mathématique", "Course" });
+            ageComboBox.Items.Add("Tout");
+            ageComboBox.Items.AddRange(Enum.GetNames(typeof(AgeGroup)));
+            typeComboBox.Items.Add("Tout");
+            typeComboBox.Items.AddRange(Enum.GetNames(typeof(Category)));
             ageComboBox.SelectedIndex = 0;
             typeComboBox.SelectedIndex = 0;
         }
@@ -42,10 +48,12 @@ namespace Projet
             {
                 Size = new Size(467, 122),
                 BackColor = SystemColors.WindowFrame,
-                Margin = new Padding(10)
+                Margin = new Padding(10),
+                Tag = book
             };
             bookPanel.Controls.Add(new Label
             {
+                Name = "bookTitleLabel",
                 Text = book.Title,
                 Font = new Font("Segoe UI", 18, FontStyle.Regular),
                 ForeColor = Color.White,
@@ -54,10 +62,29 @@ namespace Projet
             });
             bookPanel.Controls.Add(new Label
             {
+                Name = "bookAuthorLabel",
                 Text = book.Author,
                 Font = new Font("Microsoft Sans Serif", 8, FontStyle.Regular),
                 ForeColor = Color.White,
                 Location = new Point(13, 48),
+                AutoSize = true
+            });
+            bookPanel.Controls.Add(new Label
+            {
+                Name = "bookAgeGroupLabel",
+                Text = $"Âge: {book.AgeGroup}",
+                Font = new Font("Microsoft Sans Serif", 8, FontStyle.Italic),
+                ForeColor = Color.LightGray,
+                Location = new Point(13, 68),
+                AutoSize = true
+            });
+            bookPanel.Controls.Add(new Label
+            {
+                Name = "bookCategoryLabel",
+                Text = $"Catégorie: {book.Category}",
+                Font = new Font("Microsoft Sans Serif", 8, FontStyle.Italic),
+                ForeColor = Color.LightGray,
+                Location = new Point(13, 88),
                 AutoSize = true
             });
 
@@ -74,7 +101,40 @@ namespace Projet
             bookPanel.Controls.Add(current_button);
             return bookPanel;
         }
-
+        private void SearchTextBoxTextChanged(object? sender, EventArgs e)
+        {
+            FilterBooks(searchBookTextBox.Text);
+        }
+        private void ComboBoxSelectionChanged(object? sender, EventArgs e)
+        {
+            FilterBooks(searchBookTextBox.Text);
+        }
+        private void FilterBooks(string searchText)
+        {
+            searchText = searchText.ToLower();
+            AgeGroup? selectedAge = ageComboBox.SelectedItem != null && ageComboBox.SelectedItem.ToString() != "Tout"
+                ? Enum.Parse<AgeGroup>(ageComboBox.SelectedItem.ToString())
+                : null;
+            Category? selectedCategory = typeComboBox.SelectedItem != null && typeComboBox.SelectedItem.ToString() != "Tout"
+                ? Enum.Parse<Category>(typeComboBox.SelectedItem.ToString())
+                : null;
+            foreach (Control panel in booksFlowLayoutPanel.Controls)
+            {
+                if (panel is Panel bookPanel)
+                {
+                    Book book = bookPanel.Tag as Book;
+                    if (book != null)
+                    {
+                        bool matchesSearch = string.IsNullOrWhiteSpace(searchText) ||
+                                             book.Title.ToLower().Contains(searchText) ||
+                                             book.Author.ToLower().Contains(searchText);
+                        bool matchesAge = !selectedAge.HasValue || book.AgeGroup == selectedAge;
+                        bool matchesCategory = !selectedCategory.HasValue || book.Category == selectedCategory;
+                        bookPanel.Visible = matchesSearch && matchesAge && matchesCategory;
+                    }
+                }
+            }
+        }
         private void OpenForm2WithBook(Book book)
         {
             Form2 f2 = new Form2(book);
