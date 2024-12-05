@@ -11,7 +11,7 @@ using static System.Windows.Forms.DataFormats;
 
 namespace Projet
 {
-    public partial class Form3 : Form
+    public partial class Form3 : UserControl
     {
         private LoanController loanController;
         private BookController bookController;
@@ -113,6 +113,10 @@ namespace Projet
                 }
             }
         }
+		private void manageBookBorrowingsButton_Click(object sender, EventArgs e)
+        {
+            MetaForm.SwitchPanel(MetaForm.form1);
+		}
         private void HandleOnEnter(object sender, EventArgs e)
         {
             if(searchTextBox.Text == "Recherche")
