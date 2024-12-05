@@ -15,7 +15,7 @@ namespace Projet
     {
         private LoanController loanController;
         private BookController bookController;
-
+        private string SearchString = "";
         public Form3()
         {
             InitializeComponent();
@@ -23,8 +23,18 @@ namespace Projet
             loanController = new LoanController(loanRepository);
             loanController.AddLoan(new Loan(new Book("le roi lion", "Jeff", AgeGroup.Adulte, Category.Mathematique), new User("JeanGuy")));
             RefreshLoanList();
+            KeyPreview = true;
+            KeyDown += new KeyEventHandler(HandleKeyDown);
+            searchTextBox.Enter += new EventHandler(HandleOnEnter);
         }
-
+        private void HandleKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter) 
+            {
+                SearchString = searchTextBox.Text.ToLower();
+                RefreshLoanList();
+            }
+        }
         private Panel CreateLoanPanel(Loan loan)
         {
             var bookPanel = new Panel
@@ -54,7 +64,7 @@ namespace Projet
                 Text = loan.ReturnDate.ToShortDateString(),
                 Font = new Font("Microsoft Sans Serif", 8, FontStyle.Regular),
                 ForeColor = Color.White,
-                Location = new Point(13, 48),
+                Location = new Point(13, 60),
                 AutoSize = true
             });
 
@@ -66,7 +76,7 @@ namespace Projet
             current_button.ForeColor = Color.Black;
             current_button.Location = new Point(262, 70);
             current_button.Size = new Size(199, 43);
-            current_button.Click += (sender, e) => OpenForm4();
+            current_button.Click += (sender, e) => OpenForm4(loan);
 
             bookPanel.Controls.Add(current_button);
             return bookPanel;
@@ -77,15 +87,19 @@ namespace Projet
             booksFlowLayoutPanel.Controls.Clear();
             foreach (var loan in loanController.GetLoans())
             {
-                booksFlowLayoutPanel.Controls.Add(CreateLoanPanel(loan));
+                if(IsInSearch(loan))
+                    booksFlowLayoutPanel.Controls.Add(CreateLoanPanel(loan));
             }
         }
-
+        private bool IsInSearch(Loan loan)
+        {
+            return string.IsNullOrEmpty(SearchString) || loan.User.Name.ToLower().Contains(SearchString) || loan.Book.Title.ToLower().Contains(SearchString);
+        }
         private void button2_Click(object sender, EventArgs e)
         {
 
         }
-        private void OpenForm4()
+        private void OpenForm4(Loan loan)
         {
             using (var form4 = new Form4())
             {
@@ -94,11 +108,16 @@ namespace Projet
                     //TODO Gérer le returnState
                     string returnState = form4.ReturnState;
 
-                    MessageBox.Show($"Livre retourné avec l'état : {returnState}",
-                        "Confirmation", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+                    loanController.RemoveLoan(loan);
                     RefreshLoanList();
                 }
+            }
+        }
+        private void HandleOnEnter(object sender, EventArgs e)
+        {
+            if(searchTextBox.Text == "Recherche")
+            {
+                searchTextBox.Text = string.Empty;
             }
         }
     }
