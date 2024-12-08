@@ -45,6 +45,7 @@
             resources.ApplyResources(StateComboBox, "StateComboBox");
             StateComboBox.FormattingEnabled = true;
             StateComboBox.Name = "StateComboBox";
+            StateComboBox.SelectedIndexChanged += StateComboBox_SelectedIndexChanged;
             // 
             // BouttonConfirmer
             // 

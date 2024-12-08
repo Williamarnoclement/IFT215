@@ -31,8 +31,8 @@ namespace Projet
 
         private void BouttonConfirmer_Click(object sender, EventArgs e)
         {
-            ReturnState = StateComboBox.SelectedItem.ToString(); 
-            DialogResult = DialogResult.OK; 
+            ReturnState = StateComboBox.SelectedItem.ToString();
+            DialogResult = DialogResult.OK;
             Close();
         }
 
@@ -40,6 +40,11 @@ namespace Projet
         {
             DialogResult = DialogResult.Cancel;
             Close();
+        }
+
+        private void StateComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

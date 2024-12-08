@@ -17,6 +17,13 @@ namespace Projet
         {
             Book = book;
             User = user;
+            ReturnDate = DateTime.Now.AddDays(new Random().Next(14, 28));
+        }
+        public Loan(Book book, User user, DateTime returnDate)
+        {
+            Book = book;
+            User = user;
+            ReturnDate = returnDate;
         }
     }
 }

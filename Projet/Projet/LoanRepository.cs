@@ -8,8 +8,21 @@ namespace Projet
 {
     public class LoanRepository
     {
-        //TODO Ajouter des emprunts
-        private List<Loan> Loans = new List<Loan>();
+        private List<Loan> Loans {  get; set; }
+        public LoanRepository(BookController books, UserController users) 
+        {
+            //Juste pour avoir des données tests
+            List<Book> bookList = books.GetBooks();
+            List<User> userList = users.GetUsers();
+
+            Loans = new List<Loan>
+            {
+                new Loan(bookList[2], userList[1]),
+                new Loan(bookList[3], userList[1]),
+                new Loan(bookList[0], userList[3]),
+                new Loan(bookList[4], userList[4]),
+            };
+        }
 
         public event Action? LoansChanged;
         public List<Loan> GetAllLoans() => Loans;

@@ -13,11 +13,18 @@ namespace Projet
 {
     public partial class MetaForm : Form
     {
+        public static BookController BookController { get; set; }
+        public static UserController UserController { get; set; }
+        public static LoanController LoanController {  get; set; }
+
         public static UserControl form1;
         public static UserControl form2;
         public static UserControl form3;
         public MetaForm()
         {
+            BookController = new BookController(new BookRepository());
+            UserController = new UserController(new UserRepository());
+            LoanController = new LoanController(new LoanRepository(BookController, UserController));
             InitializeComponent();
             InitializePanels();
             form1.Visible = true;

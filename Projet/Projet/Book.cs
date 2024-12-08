@@ -19,6 +19,7 @@ namespace Projet
             Author = author;
             AgeGroup = ageGroup;
             Category = category;
+            State = "Excellent";
         }
     }
 }

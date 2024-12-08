@@ -10,7 +10,9 @@ namespace Projet
         public UserController(UserRepository userRepository)
         {
             UserRepository = userRepository;
+            userRepository.UsersChanged += UsersChanged;
         }
+        public event Action? UsersChanged;
 
         public List<User> GetUsers() => UserRepository.GetAllUsers();
 

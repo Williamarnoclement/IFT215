@@ -13,19 +13,13 @@ namespace Projet
 {
     public partial class Form1 : UserControl
     {
-        private BookController bookController;
         public Form1()
         {
             InitializeComponent();
+            //Rafraichir la liste lorsqu'on a ajouté ou retiré des livres
             searchBookTextBox.TextChanged += SearchTextBoxTextChanged;
             ageComboBox.SelectedIndexChanged += ComboBoxSelectionChanged;
             typeComboBox.SelectedIndexChanged += ComboBoxSelectionChanged;
-            var bookRepository = new BookRepository();
-            bookController = new BookController(bookRepository);
-            bookRepository.BooksChanged += RefreshBookList;
-            bookController.AddBook(new Book("Titre du livre 1", "Auteur 1", AgeGroup.Enfant, Category.Policier));
-            bookController.AddBook(new Book("Titre du livre 2", "Auteur 2", AgeGroup.Adolescent, Category.Science));
-            bookController.AddBook(new Book("Titre du livre 3", "Auteur 3", AgeGroup.Adulte, Category.Aventure));
             RefreshBookList();
             ageComboBox.Items.Add("Tout");
             ageComboBox.Items.AddRange(Enum.GetNames(typeof(AgeGroup)));
@@ -33,11 +27,13 @@ namespace Projet
             typeComboBox.Items.AddRange(Enum.GetNames(typeof(Category)));
             ageComboBox.SelectedIndex = 0;
             typeComboBox.SelectedIndex = 0;
+            MetaForm.BookController.BooksChanged += RefreshBookList;
+            VisibleChanged += HandleOnVisibleChanged;
         }
         private void RefreshBookList()
         {
             booksFlowLayoutPanel.Controls.Clear();
-            foreach (var book in bookController.GetBooks())
+            foreach (var book in MetaForm.BookController.GetBooks())
             {
                 booksFlowLayoutPanel.Controls.Add(CreateBookPanel(book));
             }
@@ -46,7 +42,7 @@ namespace Projet
         {
             var bookPanel = new Panel
             {
-                Size = new Size(467, 122),
+                Size = new Size(460, 140),
                 BackColor = SystemColors.WindowFrame,
                 Margin = new Padding(10),
                 Tag = book
@@ -57,49 +53,82 @@ namespace Projet
                 Text = book.Title,
                 Font = new Font("Segoe UI", 18, FontStyle.Regular),
                 ForeColor = Color.White,
-                Location = new Point(13, 9),
+                Location = new Point(14, 9),
                 AutoSize = true
             });
             bookPanel.Controls.Add(new Label
             {
                 Name = "bookAuthorLabel",
                 Text = book.Author,
-                Font = new Font("Microsoft Sans Serif", 8, FontStyle.Regular),
+                Font = new Font("Microsoft Sans Serif", 12, FontStyle.Regular),
                 ForeColor = Color.White,
-                Location = new Point(13, 48),
+                Location = new Point(16, 40),
                 AutoSize = true
             });
             bookPanel.Controls.Add(new Label
             {
                 Name = "bookAgeGroupLabel",
                 Text = $"Âge: {book.AgeGroup}",
-                Font = new Font("Microsoft Sans Serif", 8, FontStyle.Italic),
+                Font = new Font("Microsoft Sans Serif", 10, FontStyle.Italic),
                 ForeColor = Color.LightGray,
-                Location = new Point(13, 68),
+                Location = new Point(20, 68),
                 AutoSize = true
             });
             bookPanel.Controls.Add(new Label
             {
                 Name = "bookCategoryLabel",
                 Text = $"Catégorie: {book.Category}",
-                Font = new Font("Microsoft Sans Serif", 8, FontStyle.Italic),
+                Font = new Font("Microsoft Sans Serif", 10, FontStyle.Italic),
                 ForeColor = Color.LightGray,
-                Location = new Point(13, 88),
+                Location = new Point(20, 88),
                 AutoSize = true
             });
+            bookPanel.Controls.Add(new Label
+            {
+                Name = "bookCategoryLabel",
+                Text = $"État: {book.State}",
+                Font = new Font("Microsoft Sans Serif", 10, FontStyle.Italic),
+                ForeColor = Color.LightGray,
+                Location = new Point(20, 110),
+                AutoSize = true
+            });
+            //Livre réservé
+            Loan? loan = MetaForm.LoanController.GetLoans().Where(x => x.Book == book).FirstOrDefault();
+            if (loan != null)
+            {
+                bookPanel.Controls.Add(new Label
+                {
+                    Name = "bookCategoryLabel",
+                    Text = $"Réservé Jusqu'au:\n         {loan.ReturnDate.ToString("dd/MM/yyyy")}",
+                    Font = new Font("Microsoft Sans Serif", 12, FontStyle.Regular),
+                    ForeColor = Color.White,
+                    Location = new Point(255, 90),
+                    AutoSize = true
+                });
+            }
+            else
+            {
+                Button current_button = new Button();
+                current_button.Text = "Réserver";
+                current_button.Font = new Font("Segoe UI", 18, FontStyle.Regular);
+                current_button.BackColor = Color.White;
+                current_button.ForeColor = Color.Black;
+                current_button.Location = new Point(255, 90);
+                current_button.Size = new Size(199, 43);
+                current_button.Click += (sender, e) => OpenForm2WithBook(book);
 
-            Button current_button = new Button();
-            current_button.Text = "Réserver";
-            current_button.Font = new Font("Segoe UI", 18, FontStyle.Regular);
-            current_button.BackColor = Color.White;
-            current_button.ForeColor = Color.Black;
-            current_button.Location = new Point(262, 70);
-            current_button.Size = new Size(199, 43);
-            current_button.Click += (sender, e) => OpenForm2WithBook(book);
-
-            bookController.setButton(current_button);
-            bookPanel.Controls.Add(current_button);
+                bookPanel.Controls.Add(current_button);
+            }
+            
             return bookPanel;
+        }
+        //Permet de recharger la liste lorsque le composant redevient visible
+        private void HandleOnVisibleChanged(object? sender, EventArgs e)
+        {
+            if (Visible)
+            {
+                RefreshBookList();
+            }
         }
         private void SearchTextBoxTextChanged(object? sender, EventArgs e)
         {
@@ -146,6 +175,11 @@ namespace Projet
         private void manageBookBorrowingsButton_Click(object sender, EventArgs e)
         {
             MetaForm.SwitchPanel(MetaForm.form3);
+        }
+
+        private void searchBookTextBox_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

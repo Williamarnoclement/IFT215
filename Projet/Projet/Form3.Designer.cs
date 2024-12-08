@@ -30,15 +30,17 @@
         {
             manageBookBorrowingsButton = new System.Windows.Forms.Button();
             topToolbar = new System.Windows.Forms.Panel();
-            searchTextBox = new System.Windows.Forms.TextBox();
             booksFlowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
             bookPanel = new System.Windows.Forms.Panel();
             button2 = new System.Windows.Forms.Button();
             bookAuthorLabel = new System.Windows.Forms.Label();
             bookTitleLabel = new System.Windows.Forms.Label();
+            leftToolbarPanel = new System.Windows.Forms.Panel();
+            searchTextBox = new System.Windows.Forms.TextBox();
             topToolbar.SuspendLayout();
             booksFlowLayoutPanel.SuspendLayout();
             bookPanel.SuspendLayout();
+            leftToolbarPanel.SuspendLayout();
             SuspendLayout();
             // 
             // manageBookBorrowingsButton
@@ -46,11 +48,11 @@
             manageBookBorrowingsButton.BackColor = System.Drawing.SystemColors.HighlightText;
             manageBookBorrowingsButton.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             manageBookBorrowingsButton.ForeColor = System.Drawing.Color.Black;
-            manageBookBorrowingsButton.Location = new System.Drawing.Point(9, 3);
+            manageBookBorrowingsButton.Location = new System.Drawing.Point(5, 6);
             manageBookBorrowingsButton.Name = "manageBookBorrowingsButton";
             manageBookBorrowingsButton.Size = new System.Drawing.Size(255, 43);
             manageBookBorrowingsButton.TabIndex = 2;
-            manageBookBorrowingsButton.Text = "← Retour a la recherche";
+            manageBookBorrowingsButton.Text = "← Retour à la recherche";
             manageBookBorrowingsButton.UseVisualStyleBackColor = false;
             manageBookBorrowingsButton.Click += manageBookBorrowingsButton_Click;
             // 
@@ -60,28 +62,16 @@
             topToolbar.Controls.Add(manageBookBorrowingsButton);
             topToolbar.Location = new System.Drawing.Point(1, 1);
             topToolbar.Name = "topToolbar";
-            topToolbar.Size = new System.Drawing.Size(800, 49);
+            topToolbar.Size = new System.Drawing.Size(800, 56);
             topToolbar.TabIndex = 2;
-            // 
-            // searchTextBox
-            // 
-            searchTextBox.BackColor = System.Drawing.SystemColors.WindowFrame;
-            searchTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            searchTextBox.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            searchTextBox.ForeColor = System.Drawing.Color.White;
-            searchTextBox.Location = new System.Drawing.Point(27, 66);
-            searchTextBox.Name = "searchTextBox";
-            searchTextBox.Size = new System.Drawing.Size(211, 32);
-            searchTextBox.TabIndex = 3;
-            searchTextBox.Text = "Recherche";
             // 
             // booksFlowLayoutPanel
             // 
             booksFlowLayoutPanel.AutoScroll = true;
             booksFlowLayoutPanel.Controls.Add(bookPanel);
-            booksFlowLayoutPanel.Location = new System.Drawing.Point(27, 109);
+            booksFlowLayoutPanel.Location = new System.Drawing.Point(13, 112);
             booksFlowLayoutPanel.Name = "booksFlowLayoutPanel";
-            booksFlowLayoutPanel.Size = new System.Drawing.Size(761, 329);
+            booksFlowLayoutPanel.Size = new System.Drawing.Size(700, 329);
             booksFlowLayoutPanel.TabIndex = 7;
             // 
             // bookPanel
@@ -92,7 +82,7 @@
             bookPanel.Controls.Add(bookTitleLabel);
             bookPanel.Location = new System.Drawing.Point(3, 3);
             bookPanel.Name = "bookPanel";
-            bookPanel.Size = new System.Drawing.Size(758, 122);
+            bookPanel.Size = new System.Drawing.Size(600, 122);
             bookPanel.TabIndex = 5;
             // 
             // button2
@@ -100,7 +90,7 @@
             button2.BackColor = System.Drawing.Color.White;
             button2.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             button2.ForeColor = System.Drawing.Color.Black;
-            button2.Location = new System.Drawing.Point(541, 62);
+            button2.Location = new System.Drawing.Point(386, 64);
             button2.Name = "button2";
             button2.Size = new System.Drawing.Size(199, 43);
             button2.TabIndex = 3;
@@ -134,12 +124,34 @@
             bookTitleLabel.TabIndex = 0;
             bookTitleLabel.Text = "Titre du livre";
             // 
+            // leftToolbarPanel
+            // 
+            leftToolbarPanel.BackColor = System.Drawing.Color.FromArgb(192, 192, 255);
+            leftToolbarPanel.Controls.Add(searchTextBox);
+            leftToolbarPanel.Location = new System.Drawing.Point(1, 56);
+            leftToolbarPanel.Name = "leftToolbarPanel";
+            leftToolbarPanel.Size = new System.Drawing.Size(800, 50);
+            leftToolbarPanel.TabIndex = 8;
+            // 
+            // searchTextBox
+            // 
+            searchTextBox.BackColor = System.Drawing.Color.White;
+            searchTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            searchTextBox.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            searchTextBox.ForeColor = System.Drawing.Color.Black;
+            searchTextBox.Location = new System.Drawing.Point(12, 7);
+            searchTextBox.Name = "searchTextBox";
+            searchTextBox.PlaceholderText = "Chercher une réservation...";
+            searchTextBox.Size = new System.Drawing.Size(300, 35);
+            searchTextBox.TabIndex = 0;
+            searchTextBox.TextChanged += searchTextBox_TextChanged;
+            // 
             // Form3
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            Controls.Add(leftToolbarPanel);
             Controls.Add(booksFlowLayoutPanel);
-            Controls.Add(searchTextBox);
             Controls.Add(topToolbar);
             Name = "Form3";
             Size = new System.Drawing.Size(800, 450);
@@ -147,19 +159,21 @@
             booksFlowLayoutPanel.ResumeLayout(false);
             bookPanel.ResumeLayout(false);
             bookPanel.PerformLayout();
+            leftToolbarPanel.ResumeLayout(false);
+            leftToolbarPanel.PerformLayout();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
 
         private System.Windows.Forms.Button manageBookBorrowingsButton;
         private System.Windows.Forms.Panel topToolbar;
-        private System.Windows.Forms.TextBox searchTextBox;
         private System.Windows.Forms.FlowLayoutPanel booksFlowLayoutPanel;
         private System.Windows.Forms.Panel bookPanel;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Label bookAuthorLabel;
         private System.Windows.Forms.Label bookTitleLabel;
+        private System.Windows.Forms.Panel leftToolbarPanel;
+        private System.Windows.Forms.TextBox searchTextBox;
     }
 }
